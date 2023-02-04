@@ -36,18 +36,18 @@ public class ControllerExceptionHandler {
             "fk_email_un", "Email already registered",
             "name_user_fk_email_un", "An email can only be associated with one user");
 
+    @ExceptionHandler(GenericException.class)
+    public ResponseEntity<StandardError> genericException(GenericException e, HttpServletRequest request) {
+        StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), "There was a problem requesting the operation", e.getMessage(), request.getRequestURI(), System.currentTimeMillis());
+        log.error("BAD REQUEST: {} => {}", err.getError(), err.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+    
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), "Not found", e.getMessage(), request.getRequestURI(),System.currentTimeMillis());
-        log.error("PRECONDITION_FAILED: {} => {}", err.getError(), err.getMessage());
+        log.error("NOT FOUND: {} => {}", err.getError(), err.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
-    }
-
-    @ExceptionHandler(GenericException.class)
-    public ResponseEntity<StandardError> genericException(GenericException e, HttpServletRequest request) {
-        StandardError err = new StandardError(HttpStatus.PRECONDITION_FAILED.value(), "There was a problem requesting the operation", e.getMessage(), request.getRequestURI(), System.currentTimeMillis());
-        log.error("PRECONDITION_FAILED: {} => {}", err.getError(), err.getMessage());
-        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(err);
     }
 
     @ExceptionHandler(TransactionSystemException.class)
@@ -109,15 +109,15 @@ public class ControllerExceptionHandler {
                 request.getContextPath(),
                 System.currentTimeMillis()
         );
-        log.error("BAD REQUEST: {} => {}", err.getError(), err.getMessage());
+        log.error("NOT ACCEPTABLE: {} => {}", err.getError(), err.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(err);
 
     }
 
     @ExceptionHandler(ObjectInConflictException.class)
-    public ResponseEntity<StandardError> genericException(ObjectInConflictException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> objectInConflictException(ObjectInConflictException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.CONFLICT.value(), "There was a problem requesting the operation", e.getMessage(), request.getRequestURI(),System.currentTimeMillis());
-        log.error("BAD REQUEST: {} => {}", err.getError(), err.getMessage());
+        log.error("CONFLICT: {} => {}", err.getError(), err.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
     }
 
