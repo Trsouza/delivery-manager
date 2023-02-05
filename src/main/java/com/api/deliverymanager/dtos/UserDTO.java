@@ -1,5 +1,6 @@
 package com.api.deliverymanager.dtos;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -27,6 +28,9 @@ public class UserDTO {
 	@NotBlank(message= "Password cannot be null")
 	private String password;
 	
+//	@NotNull(message= "Role cannot be null")
+//	private Set<Role> roles;
+	
 	@NotNull(message= "Role cannot be null")
-	private Set<Role> roles;
+	private List<String> roles;
 }

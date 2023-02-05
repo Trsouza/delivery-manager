@@ -13,6 +13,8 @@ import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.UserRepository;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Service
 public class UserService {
 	
@@ -21,6 +23,9 @@ public class UserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+    private PasswordEncoder encoder;
 	
 	@Transactional(readOnly = true)
 	public List<User> findAll() {
@@ -33,10 +38,11 @@ public class UserService {
 	}
 	
 	@Transactional
-	public User save(UserDTO userDTO) {
-		// verificar se já tem um email igual
-		User user = modelMapper.map(userDTO, User.class);
-		return repository.save(user);
-	}
+    public void createUser(UserDTO userDTO){
+        String pass = userDTO.getPassword();
+        userDTO.setPassword(encoder.encode(pass));
+        User user = modelMapper.map(userDTO, User.class);
+        repository.save(user);
+    }
 
 }

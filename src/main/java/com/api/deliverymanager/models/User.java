@@ -1,9 +1,13 @@
 package com.api.deliverymanager.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,13 +43,17 @@ public class User implements Serializable{
 	@Column(nullable = false, length = 100, unique = true)
 	private String email;
 	
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 500)
 	private String password;
 	
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "om_user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "om_user_role",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<Role> roles;
+	@ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "om_user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private List<String> roles = new ArrayList<>();
 	
 }
