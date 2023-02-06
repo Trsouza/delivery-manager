@@ -41,7 +41,7 @@ public class WebSecurityConfig {
         .addFilterAfter(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers("/h2-console/**").permitAll()
-        .antMatchers(HttpMethod.POST,"/login").permitAll()
+        .antMatchers(HttpMethod.POST,"/auth/login").permitAll()
         .antMatchers(HttpMethod.POST,"/user").permitAll()
         .antMatchers(HttpMethod.GET,"/role-user").hasAnyRole("USER","ADM")//temorário
         .antMatchers("/role-adm").hasAnyRole("ADM") //temporário

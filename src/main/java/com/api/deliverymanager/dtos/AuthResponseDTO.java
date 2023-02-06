@@ -3,9 +3,8 @@ package com.api.deliverymanager.dtos;
 import lombok.Data;
 
 @Data
-public class SessaoDTO {
+public class AuthResponseDTO {
 
-	private String login;
     private String token;
-	
+	private UserDTO user;
 }

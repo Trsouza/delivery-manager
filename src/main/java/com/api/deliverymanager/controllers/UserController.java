@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.models.User;
+import com.api.deliverymanager.requests.UserRequest;
 import com.api.deliverymanager.services.UserService;
 
 @RestController
@@ -37,8 +38,8 @@ public class UserController {
 	}
 	
 	@PostMapping
-    public void postUser(@RequestBody @Valid UserDTO userDTO){
-        service.createUser(userDTO);
+    public void postUser(@RequestBody @Valid UserRequest userRequest){
+        service.createUser(userRequest);
     }
 	
 //  @PostMapping

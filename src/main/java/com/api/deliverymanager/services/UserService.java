@@ -6,14 +6,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.UserRepository;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.api.deliverymanager.requests.UserRequest;
 
 @Service
 public class UserService {
@@ -38,10 +37,10 @@ public class UserService {
 	}
 	
 	@Transactional
-    public void createUser(UserDTO userDTO){
-        String pass = userDTO.getPassword();
-        userDTO.setPassword(encoder.encode(pass));
-        User user = modelMapper.map(userDTO, User.class);
+    public void createUser(UserRequest userRequest){
+        String pass = userRequest.getPassword();
+        userRequest.setPassword(encoder.encode(pass));
+        User user = modelMapper.map(userRequest, User.class);
         repository.save(user);
     }
 
