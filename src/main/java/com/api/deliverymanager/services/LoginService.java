@@ -12,9 +12,9 @@ import com.api.deliverymanager.dtos.SessaoDTO;
 import com.api.deliverymanager.exceptions.GenericException;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.UserRepository;
-import com.api.deliverymanager.security.JWTCreator;
-import com.api.deliverymanager.security.JWTObject;
-import com.api.deliverymanager.security.SecurityConfig;
+import com.api.deliverymanager.security.configs.JWTCreator;
+import com.api.deliverymanager.security.configs.JWTObject;
+import com.api.deliverymanager.security.configs.SecurityConfig;
 
 @Service
 public class LoginService {

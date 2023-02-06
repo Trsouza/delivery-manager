@@ -1,4 +1,4 @@
-package com.api.deliverymanager.security;
+package com.api.deliverymanager.security.configs;
 
 import java.util.Arrays;
 import java.util.Date;

@@ -1,7 +1,5 @@
-package com.api.deliverymanager.security;
+package com.api.deliverymanager.security.configs;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +33,7 @@ public class JWTCreator {
 
     }
     private static List<String> checkRoles(List<String> roles) {
-        return roles.stream().map(s -> "ROLE_".concat(s.replaceAll("ROLE_",""))).collect(Collectors.toList());
+        return roles.stream().map(s -> "ROLE_".concat(s.replace("ROLE_",""))).collect(Collectors.toList());
     }
 
 }
