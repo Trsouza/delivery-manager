@@ -20,7 +20,7 @@ import com.api.deliverymanager.services.CompanyService;
 
 @RestController
 @RequestMapping("/company")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class CompanyController {
 
 	@Autowired

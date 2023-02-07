@@ -21,11 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.models.User;
+import com.api.deliverymanager.requests.UserRequest;
 import com.api.deliverymanager.services.UserService;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
 	@Autowired
@@ -36,22 +37,27 @@ public class UserController {
 		return service.findAll();
 	}
 	
-  @PostMapping
-  public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDTO user){
-//      if(parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())){
-//          return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: License Plate Car is already in use!");
-//      }
-//      if(parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
-//          return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
-//      }
-//      if(parkingSpotService.existsByApartmentAndBlock(parkingSpotDto.getApartment(), parkingSpotDto.getBlock())){
-//          return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
-//      }
-      //var parkingSpotModel = new ParkingSpotModel();
-      //BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
-      //parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
-      return ResponseEntity.status(HttpStatus.CREATED).body(service.save(user));
-  }
+	@PostMapping
+    public void postUser(@RequestBody @Valid UserRequest userRequest){
+        service.createUser(userRequest);
+    }
+	
+//  @PostMapping
+//  public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDTO user){
+////      if(parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())){
+////          return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: License Plate Car is already in use!");
+////      }
+////      if(parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
+////          return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
+////      }
+////      if(parkingSpotService.existsByApartmentAndBlock(parkingSpotDto.getApartment(), parkingSpotDto.getBlock())){
+////          return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
+////      }
+//      //var parkingSpotModel = new ParkingSpotModel();
+//      //BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
+//      //parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
+//      return ResponseEntity.status(HttpStatus.CREATED).body(service.save(user));
+//  }
   
 	@GetMapping("/pageable")
 	public ResponseEntity<Page<User>> findAllUsersPaged(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
