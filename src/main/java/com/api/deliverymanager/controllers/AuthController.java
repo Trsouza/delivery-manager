@@ -16,7 +16,7 @@ import com.api.deliverymanager.services.AuthService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
 	
     @Autowired

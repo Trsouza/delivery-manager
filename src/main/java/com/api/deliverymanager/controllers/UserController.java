@@ -26,7 +26,7 @@ import com.api.deliverymanager.services.UserService;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
 	@Autowired
