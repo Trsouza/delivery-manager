@@ -1,8 +1,8 @@
 package com.api.deliverymanager.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.deliverymanager.dtos.UserDTO;
+import com.api.deliverymanager.mapper.UserMapper;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.UserRepository;
 import com.api.deliverymanager.requests.UserRequest;
@@ -21,26 +23,35 @@ public class UserService {
 	private UserRepository repository;
 
 	@Autowired
-	private ModelMapper modelMapper;
+	private UserMapper userMapper;
 	
 	@Autowired
     private PasswordEncoder encoder;
 	
 	@Transactional(readOnly = true)
-	public List<User> findAll() {
-		return repository.findAll();
+	public List<UserDTO> findAll() {
+		List<User> users = repository.findAll();
+		return users.stream().map(user -> userMapper.modelToDTO(user)).collect(Collectors.toList());
 	}
 	
 	@Transactional(readOnly = true)
 	public Page<User> findAllUsersPaged(Pageable pageable) {
-		return repository.findAll(pageable);
+		Page<User> users = repository.findAll(pageable);
+		var x = users.getContent();
+		return users;
+//				(Page<UserDTO>) users.getContent().stream().map(user -> userMapper.modelToDTO(user)).collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public User findUserByEmail(String email) {
+		return repository.findUserByEmail(email);
 	}
 	
 	@Transactional
     public void createUser(UserRequest userRequest){
         String pass = userRequest.getPassword();
         userRequest.setPassword(encoder.encode(pass));
-        User user = modelMapper.map(userRequest, User.class);
+        User user = userMapper.requestToModel(userRequest);
         repository.save(user);
     }
 
