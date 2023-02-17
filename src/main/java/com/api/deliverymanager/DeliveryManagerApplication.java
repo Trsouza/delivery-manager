@@ -50,9 +50,21 @@ public class DeliveryManagerApplication implements CommandLineRunner{
 			user2.setName("Usuário");
 			user2.setEmail("user@gmail.com");
 			user2.setPassword(passwordEncoder.encode("123"));
-			user2.setRoles(List.of("USER"));
+			user2.setRoles(List.of("EMPLOYEE"));
 			
-			List<User> users = List.of(user1, user2);
+			User user3 = new User();
+			user3.setName("Empresa");
+			user3.setEmail("empresa@gmail.com");
+			user3.setPassword(passwordEncoder.encode("123"));
+			user3.setRoles(List.of("COMPANY"));
+			
+			User user4 = new User();
+			user4.setName("Entregador");
+			user4.setEmail("entregador@gmail.com");
+			user4.setPassword(passwordEncoder.encode("123"));
+			user4.setRoles(List.of("EMPLOYEE"));
+			
+			List<User> users = List.of(user1, user2, user3, user4);
 			List<User> result = this.userRepo.saveAll(users);
 
 			result.forEach(r -> 

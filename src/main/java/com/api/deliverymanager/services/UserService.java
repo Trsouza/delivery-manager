@@ -14,7 +14,6 @@ import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.mapper.UserMapper;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.UserRepository;
-import com.api.deliverymanager.requests.UserRequest;
 
 @Service
 public class UserService {
@@ -24,9 +23,6 @@ public class UserService {
 
 	@Autowired
 	private UserMapper userMapper;
-	
-	@Autowired
-    private PasswordEncoder encoder;
 	
 	@Transactional(readOnly = true)
 	public List<UserDTO> findAll() {
@@ -48,10 +44,7 @@ public class UserService {
 	}
 	
 	@Transactional
-    public void createUser(UserRequest userRequest){
-        String pass = userRequest.getPassword();
-        userRequest.setPassword(encoder.encode(pass));
-        User user = userMapper.requestToModel(userRequest);
+    public void createUser(User user){
         repository.save(user);
     }
 

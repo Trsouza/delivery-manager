@@ -21,32 +21,38 @@ CREATE TABLE OM_USER_ROLE (
 
 CREATE TABLE OM_COMPANY (
 	id INTEGER NOT NULL AUTO_INCREMENT,
-	cnpj BIGINT NOT NULL,
+	name varchar(150) NOT NULL,
+	email varchar(100) NOT NULL,
+	cnpj varchar(14) NOT NULL,
+	phone varchar(20) NOT NULL,
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE OM_DELIVERYMAN (
+CREATE TABLE OM_EMPLOYEE (
 	id INTEGER NOT NULL AUTO_INCREMENT,
-	cpf BIGINT NOT NULL,
-	company_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	CONSTRAINT fk_om_deliveryman_om_company FOREIGN KEY (company_id) REFERENCES om_company
+	name varchar(150) NOT NULL,
+	email varchar(100) NOT NULL,
+	cpf varchar(11) NOT NULL,
+	phone varchar(20) NOT NULL,
+	PRIMARY KEY (id)
 );
+--	company_id INTEGER NOT NULL,
+--	CONSTRAINT fk_om_employee_om_company FOREIGN KEY (company_id) REFERENCES om_company
 
 CREATE TABLE OM_DELIVERY (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	delivery_date timestamp,
 	send_date timestamp NOT NULL,
 	expected_delivery_date timestamp NOT NULL,
-	company_id INTEGER NOT NULL,
 	first_try tinyint,
 	second_try tinyint,
-	deliveryman_id INTEGER NOT NULL,
+	company_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	CONSTRAINT fk_om_delivery_om_company FOREIGN KEY (company_id) REFERENCES om_company,
-	CONSTRAINT fk_om_delivery_om_deliveryman FOREIGN KEY (deliveryman_id) REFERENCES om_deliveryman
+	CONSTRAINT fk_om_delivery_om_company FOREIGN KEY (company_id) REFERENCES om_company
 );
 
+--	employee_id INTEGER NOT NULL,
+--	CONSTRAINT fk_om_delivery_om_employee FOREIGN KEY (employee_id) REFERENCES om_employee
 
 
 
@@ -54,12 +60,12 @@ CREATE TABLE OM_DELIVERY (
 
 -- INSERT INTO OM_ROLE (NAME) VALUES('Administrator');
 -- INSERT INTO OM_ROLE (NAME) VALUES('Company');
--- INSERT INTO OM_ROLE (NAME) VALUES('Deliveryman');
+-- INSERT INTO OM_ROLE (NAME) VALUES('employee');
 
 -- INSERT INTO OM_USER (NAME, EMAIL, PASSWORD) VALUES('Administrador', 'adm@adm.com', '123');
 -- INSERT INTO OM_USER_ROLE (USER_ID, ROLE_ID) VALUES ((SELECT id from OM_USER WHERE email = 'adm@adm.com'),(SELECT id from OM_ROLE WHERE name = 'Administrator'));
 
 -- INSERT INTO OM_COMPANY (CNPJ) VALUES(02563325600);
--- INSERT INTO OM_DELIVERYMAN (CPF, COMPANY_ID) VALUES(05328094328, 1);
--- INSERT INTO OM_DELIVERY (SEND_DATE, EXPECTED_DELIVERY_DATE, COMPANY_ID, DELIVERYMAN_ID) VALUES(PARSEDATETIME('2020-11-30-10.20.00','yyyy-MM-dd-HH.mm.ss'), PARSEDATETIME('2020-12-30-10.30.00','yyyy-MM-dd-HH.mm.ss'), 1, 1);
--- INSERT INTO OM_DELIVERY (SEND_DATE, EXPECTED_DELIVERY_DATE, COMPANY_ID, DELIVERYMAN_ID) VALUES(PARSEDATETIME('2020-11-20-10.20.00','yyyy-MM-dd-HH.mm.ss'), PARSEDATETIME('2020-12-25-10.30.00','yyyy-MM-dd-HH.mm.ss'), 1, 1);
+-- INSERT INTO OM_EMPLOYEE (CPF, COMPANY_ID) VALUES(05328094328, 1);
+-- INSERT INTO OM_DELIVERY (SEND_DATE, EXPECTED_DELIVERY_DATE, COMPANY_ID, EMPLOYEE_ID) VALUES(PARSEDATETIME('2020-11-30-10.20.00','yyyy-MM-dd-HH.mm.ss'), PARSEDATETIME('2020-12-30-10.30.00','yyyy-MM-dd-HH.mm.ss'), 1, 1);
+-- INSERT INTO OM_DELIVERY (SEND_DATE, EXPECTED_DELIVERY_DATE, COMPANY_ID, EMPLOYEE_ID) VALUES(PARSEDATETIME('2020-11-20-10.20.00','yyyy-MM-dd-HH.mm.ss'), PARSEDATETIME('2020-12-25-10.30.00','yyyy-MM-dd-HH.mm.ss'), 1, 1);

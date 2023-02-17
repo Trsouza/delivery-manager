@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.models.User;
-import com.api.deliverymanager.requests.UserRequest;
+import com.api.deliverymanager.requests.EmployeeRequest;
 
 @Component
 public class UserMapper {
@@ -14,16 +14,16 @@ public class UserMapper {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public UserDTO modelToDTO(User animal) {
-		return modelMapper.map(animal, UserDTO.class);
+	public UserDTO modelToDTO(User user) {
+		return modelMapper.map(user, UserDTO.class);
 	}
 
-	public User requestToModel(UserRequest animalRequest) {
-		return modelMapper.map(animalRequest, User.class);
+	public User requestToModel(EmployeeRequest userRequest) {
+		return modelMapper.map(userRequest, User.class);
 	}
 	
-	public UserRequest ModelToRequest(User animal) {
-		return modelMapper.map(animal, UserRequest.class);
+	public EmployeeRequest ModelToRequest(User user) {
+		return modelMapper.map(user, EmployeeRequest.class);
 	}
 
 }

@@ -42,8 +42,8 @@ public class WebSecurityConfig {
         .antMatchers(PUBLIC_URLS).permitAll()
         .antMatchers("/h2-console/**").permitAll()
         .antMatchers(HttpMethod.POST,"/auth/login").permitAll()
-        .antMatchers(HttpMethod.POST,"/user").permitAll()
-        .antMatchers(HttpMethod.GET,"/role-user").hasAnyRole("USER","ADM")//temorário
+        .antMatchers(HttpMethod.POST,"/employee").permitAll()
+        .antMatchers(HttpMethod.GET,"/role-user").hasAnyRole("EMPLOYEE","ADM")//temporário
         .antMatchers("/role-adm").hasAnyRole("ADM") //temporário
         .anyRequest()
         .authenticated()

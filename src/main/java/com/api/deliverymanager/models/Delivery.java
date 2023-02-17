@@ -43,6 +43,6 @@ public class Delivery implements Serializable {
     
     @NotNull(message = "Deliveryman cannot be null")
     @ManyToOne 
-    private Deliveryman deliveryman;
+    private Employee deliveryman;
 	
 }

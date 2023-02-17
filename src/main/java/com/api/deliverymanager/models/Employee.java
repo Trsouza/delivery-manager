@@ -6,11 +6,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,9 +25,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "OM_COMPANY")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Company implements Serializable {
+@Table(name = "OM_EMPLOYEE")
+public class Employee implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -35,15 +34,25 @@ public class Company implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
-	@Column(nullable = false)
-	private Long cnpj;
+	@Column(nullable = false, length = 11)
+	private String cpf;
+	
+	@Column(nullable = false, length = 150)
+	private String name;
+	
+	@Column(nullable = false, length = 100)
+	private String email;
+	
+	@Column(nullable = false, length = 20)
+	private String phone;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private List<Delivery> orders;
-    
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//	private List<Deliveryman> couriers;
+	@OrderBy("expectedDeliveryDate ASC")
+	@OneToMany(mappedBy = "deliveryman", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Delivery> deliveries;
+	
+    //@NotNull(message = "Company cannot be null")
+//    @ManyToOne 
+//    private Company company;
 	
 }
