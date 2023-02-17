@@ -8,7 +8,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -40,6 +39,7 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
         .addFilterAfter(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
+        .antMatchers(PUBLIC_URLS).permitAll()
         .antMatchers("/h2-console/**").permitAll()
         .antMatchers(HttpMethod.POST,"/auth/login").permitAll()
         .antMatchers(HttpMethod.POST,"/user").permitAll()
@@ -53,10 +53,10 @@ public class WebSecurityConfig {
         return http.build();
     }
     
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(PUBLIC_URLS);
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().antMatchers(PUBLIC_URLS);
+//    }
     
     @Bean //HABILITANDO ACESSAR O H2-DATABSE NA WEB
     public ServletRegistrationBean<WebServlet> h2servletRegistration(){

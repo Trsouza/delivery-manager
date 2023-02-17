@@ -3,16 +3,14 @@ package com.api.deliverymanager.services;
 
 import java.util.Date;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.api.deliverymanager.dtos.AuthResponseDTO;
-import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.exceptions.GenericException;
+import com.api.deliverymanager.mapper.UserMapper;
 import com.api.deliverymanager.models.User;
-import com.api.deliverymanager.repositories.UserRepository;
 import com.api.deliverymanager.requests.AuthRequest;
 import com.api.deliverymanager.security.configs.JWTCreator;
 import com.api.deliverymanager.security.configs.JWTObject;
@@ -22,17 +20,17 @@ import com.api.deliverymanager.security.configs.SecurityConfig;
 public class AuthService {
 	
 	@Autowired
-	private UserRepository repository;
+	private UserService userService;
 	
     @Autowired
     private PasswordEncoder encoder;
     
 	@Autowired
-	private ModelMapper modelMapper;
+	private UserMapper userMapper;
 
 	public AuthResponseDTO authenticate(AuthRequest login){
 		
-		User user = repository.findUserByEmail(login.getEmail());
+		User user = userService.findUserByEmail(login.getEmail());
 	    if(user!=null) {
 	        boolean passwordOk =  encoder.matches(login.getPassword(), user.getPassword());
 	        if (!passwordOk) {
@@ -40,7 +38,7 @@ public class AuthService {
 	        }
 	        
 	        AuthResponseDTO response = new AuthResponseDTO();
-	        var userResponse = modelMapper.map(user, UserDTO.class);
+	        var userResponse = userMapper.modelToDTO(user);
 	        response.setUser(userResponse);
 	
 	        JWTObject jwtObject = new JWTObject();
