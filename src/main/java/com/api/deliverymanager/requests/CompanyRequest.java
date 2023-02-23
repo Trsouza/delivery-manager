@@ -29,7 +29,7 @@ public class CompanyRequest {
 	@NotBlank(message= "Phone cannot be null")
 	private String phone;
 	
-	@Size(max = 11)
+	@Size(max = 14)
 	@NotBlank(message= "Cnpj cannot be null")
 	private String cnpj;
 		
