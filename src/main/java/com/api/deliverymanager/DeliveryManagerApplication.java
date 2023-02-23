@@ -18,6 +18,7 @@ import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.CompanyRepository;
 import com.api.deliverymanager.repositories.EmployeeRepository;
 import com.api.deliverymanager.repositories.UserRepository;
+import com.api.deliverymanager.utils.Constant;
 
 @SpringBootApplication
 public class DeliveryManagerApplication implements CommandLineRunner{
@@ -55,7 +56,7 @@ public class DeliveryManagerApplication implements CommandLineRunner{
 			adm.setEmail("adm@gmail.com");
 			adm.setStatus(true);
 			adm.setPassword(passwordEncoder.encode("123"));
-			adm.setRoles(List.of("ADM","EMPLOYEE","COMPANY"));
+			adm.setRoles(List.of(Constant.ROLE_ADM, Constant.ROLE_EMPLOYEE, Constant.ROLE_COMPANY));
 			
 			var ad = userRepo.saveAndFlush(adm);
 			logger.log(Level.INFO, "{0}. Criado com sucesso!", ad);
@@ -67,7 +68,7 @@ public class DeliveryManagerApplication implements CommandLineRunner{
 			company.setEmail("empresa@gmail.com");
 			company.setStatus(true);
 			company.setPassword(passwordEncoder.encode("123"));
-			company.setRoles(List.of("COMPANY"));
+			company.setRoles(List.of(Constant.ROLE_COMPANY));
 			
 			var comp = companyRepo.saveAndFlush(company);
 			logger.log(Level.INFO, "{0}. Criado com sucesso!", comp);
@@ -79,7 +80,7 @@ public class DeliveryManagerApplication implements CommandLineRunner{
 			employee.setEmail("user@gmail.com");
 			employee.setStatus(true);
 			employee.setPassword(passwordEncoder.encode("123"));
-			employee.setRoles(List.of("EMPLOYEE"));
+			employee.setRoles(List.of(Constant.ROLE_EMPLOYEE));
 			
 			var emp = employeeRepo.saveAndFlush(employee);
 			logger.log(Level.INFO, "{0}. Criado com sucesso!", emp);

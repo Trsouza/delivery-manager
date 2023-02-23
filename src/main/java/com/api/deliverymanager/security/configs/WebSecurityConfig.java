@@ -44,8 +44,8 @@ public class WebSecurityConfig {
         .antMatchers(HttpMethod.POST,"/auth/login").permitAll()
         .antMatchers(HttpMethod.POST,"/employee").permitAll()
         .antMatchers(HttpMethod.POST,"/company").permitAll()
-        .antMatchers(HttpMethod.GET,"/role-user").hasAnyRole("EMPLOYEE", "COMPANY", "ADM")//temporário
-        .antMatchers("/role-adm").hasAnyRole("ADM") //temporário
+//        .antMatchers(HttpMethod.GET,"/role-user").hasAnyRole("EMPLOYEE", "COMPANY", "ADM")//temporário
+//        .antMatchers("/role-adm").hasAnyRole("ADM") //temporário
         .anyRequest()
         .authenticated()
         .and()

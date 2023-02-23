@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.models.User;
+import com.api.deliverymanager.security.CheckSecurity;
 import com.api.deliverymanager.services.UserService;
 
 @RestController
@@ -26,6 +27,7 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	@CheckSecurity.CanAccessOnlyAuthorityAdministrator
 	@GetMapping
 	public @ResponseBody List<UserDTO> findAllUsers() {
 		return service.findAll();
@@ -48,6 +50,7 @@ public class UserController {
 //      return ResponseEntity.status(HttpStatus.CREATED).body(service.save(user));
 //  }
   
+	@CheckSecurity.CanAccessOnlyAuthorityAdministrator
 	@GetMapping("/pageable")
 	public ResponseEntity<Page<User>> findAllUsersPaged(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
 		return ResponseEntity.status(HttpStatus.OK).body(service.findAllUsersPaged(pageable));

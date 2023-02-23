@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.deliverymanager.models.Company;
 import com.api.deliverymanager.requests.CompanyRequest;
+import com.api.deliverymanager.security.CheckSecurity;
 import com.api.deliverymanager.services.CompanyService;
 
 @RestController
@@ -30,11 +31,13 @@ public class CompanyController {
 	@Autowired
 	private CompanyService service;
 
+	@CheckSecurity.CanAccessOnlyAuthorityAdministrator
 	@GetMapping
 	public @ResponseBody List<Company> findAllCompanies() {
 		return service.findAllCompanies();
 	}
 	
+	@CheckSecurity.CanAccessOnlyAuthorityAdministrator
 	@GetMapping("/pageable")
 	public ResponseEntity<Page<Company>> findAllCompaniesPaged(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
 		return ResponseEntity.status(HttpStatus.OK).body(service.findAllCompaniesPaged(pageable));
