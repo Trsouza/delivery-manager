@@ -6,6 +6,7 @@ CREATE TABLE OM_USER (
 	name VARCHAR_IGNORECASE(100) NOT NULL,
 	email VARCHAR_IGNORECASE(100) NOT NULL,
 	password varchar(400) NOT NULL,
+	status BOOLEAN NOT NULL DEFAULT TRUE,
 	PRIMARY KEY (id),
 	CONSTRAINT fk_email_un UNIQUE (email),
 	CONSTRAINT name_user_fk_email_un UNIQUE (name, email)
@@ -20,21 +21,21 @@ CREATE TABLE OM_USER_ROLE (
 );
 
 CREATE TABLE OM_COMPANY (
-	id INTEGER NOT NULL AUTO_INCREMENT,
-	name varchar(150) NOT NULL,
-	email varchar(100) NOT NULL,
+	user_id bigint NOT NULL,
 	cnpj varchar(14) NOT NULL,
 	phone varchar(20) NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (user_id),
+	CONSTRAINT fk_cnpj_un UNIQUE (cnpj),
+	CONSTRAINT fk_om_company_om_user FOREIGN KEY (user_id) REFERENCES om_user
 );
 
 CREATE TABLE OM_EMPLOYEE (
-	id INTEGER NOT NULL AUTO_INCREMENT,
-	name varchar(150) NOT NULL,
-	email varchar(100) NOT NULL,
+	user_id bigint NOT NULL,
 	cpf varchar(11) NOT NULL,
 	phone varchar(20) NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (user_id),
+	CONSTRAINT fk_cpf_un UNIQUE (cpf),
+	CONSTRAINT fk_om_employee_om_user FOREIGN KEY (user_id) REFERENCES om_user
 );
 --	company_id INTEGER NOT NULL,
 --	CONSTRAINT fk_om_employee_om_company FOREIGN KEY (company_id) REFERENCES om_company

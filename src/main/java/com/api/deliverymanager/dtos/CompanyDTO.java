@@ -11,5 +11,7 @@ public class CompanyDTO {
 	private String name;
 	private String email;
 	private String cnpj;
+	private String phone;
+	private Boolean status;
 
 }

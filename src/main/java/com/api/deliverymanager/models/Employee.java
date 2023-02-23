@@ -1,47 +1,36 @@
 package com.api.deliverymanager.models;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "OM_EMPLOYEE")
-public class Employee implements Serializable{
-	
+@PrimaryKeyJoinColumn(name = "userId")
+public class Employee extends User {
+
 	private static final long serialVersionUID = 1L;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
-	@Column(nullable = false, length = 11)
+	@Column(nullable = false, length = 11, unique = true)
 	private String cpf;
-	
-	@Column(nullable = false, length = 150)
-	private String name;
-	
-	@Column(nullable = false, length = 100)
-	private String email;
 	
 	@Column(nullable = false, length = 20)
 	private String phone;
@@ -55,4 +44,13 @@ public class Employee implements Serializable{
 //    @ManyToOne 
 //    private Company company;
 	
+    @Builder
+    public Employee(final String cpf, final String phone, 
+    				final Long id, final String name, 
+    				final String email, final String password, 
+    				final Boolean status, final List<String> roles ) {
+        super(id, name, email, password, status, roles);
+        this.cpf = cpf;
+        this.phone = phone;
+    }
 }

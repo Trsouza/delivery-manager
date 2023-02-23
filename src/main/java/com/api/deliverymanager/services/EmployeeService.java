@@ -9,18 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.api.deliverymanager.dtos.EmployeeDTO;
 import com.api.deliverymanager.mapper.EmployeeMapper;
 import com.api.deliverymanager.models.Employee;
-import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.EmployeeRepository;
 import com.api.deliverymanager.requests.EmployeeRequest;
 
 @Service
-public class DeliverymanService {
+public class EmployeeService {
 	
 	@Autowired
 	private EmployeeRepository repository;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
@@ -30,21 +26,16 @@ public class DeliverymanService {
 	
 	@Transactional
     public EmployeeDTO createEmployee(EmployeeRequest d){
-	
-        User user = User.builder() 
-				.name(d.getName())
-				.email(d.getEmail())
-				.roles(d.getRoles())
-				.password(passwordEncoder.encode(d.getPassword()))
-				.build();
-		userService.createUser(user);
 		
         Employee deliveryman = employeeMapper.requestToModel(d);
+        deliveryman.setPassword(passwordEncoder.encode(d.getPassword()));
+        deliveryman.setStatus(true);
 		
-		return employeeMapper.modelToDTO(repository.save(deliveryman));
+		return employeeMapper.modelToDTO(repository.saveAndFlush(deliveryman));
+		
     }
 
 	private Employee verifyIfExists(Long id) throws ObjectNotFoundException {
-		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Form"));
+		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Employee"));
 	}
 }

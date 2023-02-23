@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EmployeeRequest {
+public class CompanyRequest {
 
 	@Size(max = 150)
 	@NotBlank(message= "Name cannot be null")
@@ -30,8 +30,8 @@ public class EmployeeRequest {
 	private String phone;
 	
 	@Size(max = 11)
-	@NotBlank(message= "Cpf cannot be null")
-	private String cpf;
+	@NotBlank(message= "Cnpj cannot be null")
+	private String cnpj;
 		
 //	@NotNull(message= "Role cannot be null")
 //	private Set<Role> roles;

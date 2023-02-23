@@ -11,4 +11,6 @@ public class EmployeeDTO {
 	private String name;
 	private String email;
 	private String cpf;
+	private String phone;
+	private Boolean status;
 }

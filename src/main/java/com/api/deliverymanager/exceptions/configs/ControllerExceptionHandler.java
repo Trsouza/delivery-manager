@@ -76,29 +76,29 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandardError> dataIntegrityException(DataIntegrityViolationException e, HttpServletRequest request) {
-    	var rootMsg = Objects.requireNonNull(e.getRootCause()).getMessage();
-    	var message="";
-        if (rootMsg != null) {
-            var lowerCaseMsg = rootMsg.toLowerCase();
-            for (Map.Entry<String, String> entry : CONSTRAINTS_MAP.entrySet()) {
-                if (lowerCaseMsg.contains(entry.getKey())) {
-                    message = entry.getValue();
-                }
-            }
-        }
-    	
-    	StandardError err = new StandardError(
-                HttpStatus.BAD_REQUEST.value(),
-                DATA_INTEGRITY_VIOLATION,
-                "Unable to perform the transaction: "+ message,
-                request.getContextPath(),
-                System.currentTimeMillis()
-        );
-        log.error("BAD REQUEST: {} => {}", err.getError(), err.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
-    }
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<StandardError> dataIntegrityException(DataIntegrityViolationException e, HttpServletRequest request) {
+//    	var rootMsg = Objects.requireNonNull(e.getRootCause()).getMessage();
+//    	var message="";
+//        if (rootMsg != null) {
+//            var lowerCaseMsg = rootMsg.toLowerCase();
+//            for (Map.Entry<String, String> entry : CONSTRAINTS_MAP.entrySet()) {
+//                if (lowerCaseMsg.contains(entry.getKey())) {
+//                    message = entry.getValue();
+//                }
+//            }
+//        }
+//    	
+//    	StandardError err = new StandardError(
+//                HttpStatus.BAD_REQUEST.value(),
+//                DATA_INTEGRITY_VIOLATION,
+//                "Unable to perform the transaction: "+ message,
+//                request.getContextPath(),
+//                System.currentTimeMillis()
+//        );
+//        log.error("BAD REQUEST: {} => {}", err.getError(), err.getMessage());
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+//    }
 
     @ExceptionHandler(RollbackException.class)
     public ResponseEntity<StandardError> handleNotValidException(RollbackException ex, HttpServletRequest request){

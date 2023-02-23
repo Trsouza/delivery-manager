@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.deliverymanager.requests.EmployeeRequest;
-import com.api.deliverymanager.services.DeliverymanService;
+import com.api.deliverymanager.services.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
 	@Autowired
-	private DeliverymanService service;
+	private EmployeeService service;
 	
 	@PostMapping
     public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeRequest userRequest){

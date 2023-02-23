@@ -14,16 +14,16 @@ public class EmployeeMapper {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public EmployeeDTO modelToDTO(Employee deliveryman) {
-		return modelMapper.map(deliveryman, EmployeeDTO.class);
+	public EmployeeDTO modelToDTO(Employee employee) {
+		return modelMapper.map(employee, EmployeeDTO.class);
 	}
 
-	public Employee requestToModel(EmployeeRequest deliverymanRequest) {
-		return modelMapper.map(deliverymanRequest, Employee.class);
+	public Employee requestToModel(EmployeeRequest employeeRequest) {
+		return modelMapper.map(employeeRequest, Employee.class);
 	}
 	
-	public EmployeeRequest ModelToRequest(Employee deliveryman) {
-		return modelMapper.map(deliveryman, EmployeeRequest.class);
+	public EmployeeRequest modelToRequest(Employee employee) {
+		return modelMapper.map(employee, EmployeeRequest.class);
 	}
 
 }

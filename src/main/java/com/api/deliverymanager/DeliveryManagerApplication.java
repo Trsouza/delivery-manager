@@ -12,7 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.api.deliverymanager.models.Company;
+import com.api.deliverymanager.models.Employee;
 import com.api.deliverymanager.models.User;
+import com.api.deliverymanager.repositories.CompanyRepository;
+import com.api.deliverymanager.repositories.EmployeeRepository;
 import com.api.deliverymanager.repositories.UserRepository;
 
 @SpringBootApplication
@@ -23,6 +27,12 @@ public class DeliveryManagerApplication implements CommandLineRunner{
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private EmployeeRepository employeeRepo;
+	
+	@Autowired
+	private CompanyRepository companyRepo;
 	
 	@Bean
 	public ModelMapper modelMapper() {
@@ -40,36 +50,47 @@ public class DeliveryManagerApplication implements CommandLineRunner{
 
 		try {
 
-			User user1 = new User();
-			user1.setName("Administrador");
-			user1.setEmail("adm@gmail.com");
-			user1.setPassword(passwordEncoder.encode("123"));
-			user1.setRoles(List.of("ADM","USER"));
+			User adm = new User();
+			adm.setName("Administrador");
+			adm.setEmail("adm@gmail.com");
+			adm.setStatus(true);
+			adm.setPassword(passwordEncoder.encode("123"));
+			adm.setRoles(List.of("ADM","EMPLOYEE","COMPANY"));
+			
+			var ad = userRepo.saveAndFlush(adm);
+			logger.log(Level.INFO, "{0}. Criado com sucesso!", ad);
+			
+			Company company = new Company();
+			company.setPhone("88992968500");
+			company.setCnpj("83336461000167");
+			company.setName("Empresa");
+			company.setEmail("empresa@gmail.com");
+			company.setStatus(true);
+			company.setPassword(passwordEncoder.encode("123"));
+			company.setRoles(List.of("COMPANY"));
+			
+			var comp = companyRepo.saveAndFlush(company);
+			logger.log(Level.INFO, "{0}. Criado com sucesso!", comp);
+			
+			Employee employee = new Employee();
+			employee.setPhone("88996968596");
+			employee.setCpf("56024378009");
+			employee.setName("Funcionário");
+			employee.setEmail("user@gmail.com");
+			employee.setStatus(true);
+			employee.setPassword(passwordEncoder.encode("123"));
+			employee.setRoles(List.of("EMPLOYEE"));
+			
+			var emp = employeeRepo.saveAndFlush(employee);
+			logger.log(Level.INFO, "{0}. Criado com sucesso!", emp);
+			
+			
+//			List<User> users = List.of(user1, user3);
+//			List<User> result = userRepo.saveAll(users);
 
-			User user2 = new User();
-			user2.setName("Usuário");
-			user2.setEmail("user@gmail.com");
-			user2.setPassword(passwordEncoder.encode("123"));
-			user2.setRoles(List.of("EMPLOYEE"));
-			
-			User user3 = new User();
-			user3.setName("Empresa");
-			user3.setEmail("empresa@gmail.com");
-			user3.setPassword(passwordEncoder.encode("123"));
-			user3.setRoles(List.of("COMPANY"));
-			
-			User user4 = new User();
-			user4.setName("Entregador");
-			user4.setEmail("entregador@gmail.com");
-			user4.setPassword(passwordEncoder.encode("123"));
-			user4.setRoles(List.of("EMPLOYEE"));
-			
-			List<User> users = List.of(user1, user2, user3, user4);
-			List<User> result = this.userRepo.saveAll(users);
-
-			result.forEach(r -> 
-				logger.log(Level.INFO, "{0}. Criado com sucesso!", r)
-			);
+//			result.forEach(r -> 
+//				logger.log(Level.INFO, "{0}. Criado com sucesso!", r)
+//			);
 
 		} catch (Exception e) {
 			e.printStackTrace();
