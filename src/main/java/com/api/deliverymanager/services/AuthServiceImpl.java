@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.api.deliverymanager.dtos.AuthResponseDTO;
 import com.api.deliverymanager.exceptions.GenericException;
+import com.api.deliverymanager.interfaces.AuthService;
 import com.api.deliverymanager.mapper.UserMapper;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.requests.AuthRequest;
@@ -17,10 +18,10 @@ import com.api.deliverymanager.security.configs.JWTObject;
 import com.api.deliverymanager.security.configs.SecurityConfig;
 
 @Service
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
 	
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 	
     @Autowired
     private PasswordEncoder encoder;
