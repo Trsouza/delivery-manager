@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.deliverymanager.models.Delivery;
-import com.api.deliverymanager.services.DeliveryService;
+import com.api.deliverymanager.services.DeliveryServiceImpl;
 
 @RestController
 @RequestMapping("/delivery")
 public class DeliveryController {
 
 	@Autowired
-	private DeliveryService service;
+	private DeliveryServiceImpl service;
 
 	@GetMapping
 	public @ResponseBody List<Delivery> findAllOrders() {

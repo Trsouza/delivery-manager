@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.deliverymanager.requests.AuthRequest;
-import com.api.deliverymanager.services.AuthService;
+import com.api.deliverymanager.services.AuthServiceImpl;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,7 +20,7 @@ import com.api.deliverymanager.services.AuthService;
 public class AuthController {
 	
     @Autowired
-    private AuthService service;
+    private AuthServiceImpl service;
     
     @PostMapping("/login")
     public ResponseEntity<Object> authenticate(@RequestBody @Valid AuthRequest login){

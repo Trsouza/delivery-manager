@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.deliverymanager.dtos.UserDTO;
+import com.api.deliverymanager.interfaces.UserService;
 import com.api.deliverymanager.mapper.UserMapper;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.repositories.UserRepository;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository repository;
@@ -41,10 +42,5 @@ public class UserService {
 	public User findUserByEmail(String email) {
 		return repository.findUserByEmail(email);
 	}
-	
-	@Transactional
-    public void createUser(User user){
-        repository.save(user);
-    }
 
 }

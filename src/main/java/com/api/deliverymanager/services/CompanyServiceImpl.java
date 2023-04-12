@@ -11,16 +11,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.deliverymanager.dtos.CompanyDTO;
+import com.api.deliverymanager.interfaces.CompanyService;
 import com.api.deliverymanager.mapper.CompanyMapper;
 import com.api.deliverymanager.models.Company;
 import com.api.deliverymanager.repositories.CompanyRepository;
 import com.api.deliverymanager.requests.CompanyRequest;
 
 @Service
-public class CompanyService {
+public class CompanyServiceImpl implements CompanyService{
 	
 	@Autowired
 	private CompanyRepository repository;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private CompanyMapper companyMapper;
 	
 	@Transactional(readOnly = true)
 	public List<Company> findAllCompanies() {
@@ -31,12 +38,6 @@ public class CompanyService {
 	public Page<Company> findAllCompaniesPaged(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
-	
-	@Autowired
-    private PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	private CompanyMapper companyMapper;
 	
 	@Transactional
     public CompanyDTO createCompany(CompanyRequest d){
@@ -49,7 +50,7 @@ public class CompanyService {
 		
     }
 
-	private Company verifyIfExists(Long id) throws ObjectNotFoundException {
+	public Company verifyIfExists(Long id) throws ObjectNotFoundException {
 		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Company"));
 	}
 }

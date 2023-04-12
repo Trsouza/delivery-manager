@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.deliverymanager.models.Company;
 import com.api.deliverymanager.requests.CompanyRequest;
 import com.api.deliverymanager.security.CheckSecurity;
-import com.api.deliverymanager.services.CompanyService;
+import com.api.deliverymanager.services.CompanyServiceImpl;
 
 @RestController
 @RequestMapping("/company")
@@ -29,7 +29,7 @@ import com.api.deliverymanager.services.CompanyService;
 public class CompanyController {
 
 	@Autowired
-	private CompanyService service;
+	private CompanyServiceImpl service;
 
 	@CheckSecurity.CanAccessOnlyAuthorityAdministrator
 	@GetMapping

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.deliverymanager.dtos.UserDTO;
 import com.api.deliverymanager.models.User;
 import com.api.deliverymanager.security.CheckSecurity;
-import com.api.deliverymanager.services.UserService;
+import com.api.deliverymanager.services.UserServiceImpl;
 
 @RestController
 @RequestMapping("/user")
@@ -25,7 +25,7 @@ import com.api.deliverymanager.services.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService service;
+	private UserServiceImpl service;
 	
 	@CheckSecurity.CanAccessOnlyAuthorityAdministrator
 	@GetMapping
